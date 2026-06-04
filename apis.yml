@@ -105,6 +105,14 @@ common:
     url: finops/lse-finops.yml
   - type: Review
     url: review.yml
+  - type: Blog
+    url: https://blogs.lse.ac.uk/
+  - type: BlogRSS
+    url: https://blogs.lse.ac.uk/feed/
+  - type: JSONLD
+    url: json-ld/lse-context.jsonld
+  - type: Blogs
+    url: blogs/blogs.json
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

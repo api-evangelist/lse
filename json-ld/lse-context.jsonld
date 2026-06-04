@@ -1,0 +1,97 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "lse": "https://www.lse.ac.uk/#",
+    "schema": "https://schema.org/",
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "oai": "http://www.openarchives.org/OAI/2.0/",
+    "iiif": "http://iiif.io/api/presentation/3#",
+
+    "CollegeOrUniversity": "schema:CollegeOrUniversity",
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "logo": {
+      "@id": "schema:logo",
+      "@type": "@id"
+    },
+    "sameAs": {
+      "@id": "schema:sameAs",
+      "@type": "@id"
+    },
+    "address": "schema:address",
+    "email": "schema:email",
+
+    "department": {
+      "@id": "schema:department",
+      "@type": "@id"
+    },
+    "subOrganization": {
+      "@id": "schema:subOrganization",
+      "@type": "@id"
+    },
+
+    "Repository": "schema:DataCatalog",
+    "DigitalLibrary": "schema:DigitalDocument",
+    "baseURL": {
+      "@id": "schema:contentUrl",
+      "@type": "@id"
+    },
+
+    "ResearchOutput": "schema:CreativeWork",
+    "identifier": "schema:identifier",
+    "title": "dc:title",
+    "creator": "dc:creator",
+    "datePublished": {
+      "@id": "schema:datePublished",
+      "@type": "Date"
+    },
+    "license": {
+      "@id": "schema:license",
+      "@type": "@id"
+    },
+    "isPartOf": {
+      "@id": "schema:isPartOf",
+      "@type": "@id"
+    },
+
+    "manifest": {
+      "@id": "iiif:hasManifest",
+      "@type": "@id"
+    },
+    "metadataFormat": "oai:metadataPrefix",
+    "setSpec": "oai:setSpec"
+  },
+  "@type": "CollegeOrUniversity",
+  "@id": "https://www.lse.ac.uk/#organization",
+  "name": "London School of Economics and Political Science",
+  "description": "Public research university in London, United Kingdom, renowned for the social sciences. Its public machine-readable footprint centers on library and open-research infrastructure: the LSE Research Online institutional repository (EPrints, OAI-PMH), the LSE Digital Library (Quartex, IIIF / OAI-PMH), and Ex Libris Alma/Primo discovery, with identity federated via SAML2 (Shibboleth).",
+  "url": "https://www.lse.ac.uk/",
+  "logo": "https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg",
+  "sameAs": [
+    "https://www.linkedin.com/school/the-london-school-of-economics-and-political-science/",
+    "https://twitter.com/LSEnews",
+    "https://blogs.lse.ac.uk/"
+  ],
+  "subOrganization": [
+    {
+      "@type": "Repository",
+      "@id": "https://researchonline.lse.ac.uk/#repository",
+      "name": "LSE Research Online",
+      "description": "LSE institutional repository (EPrints 3) exposing an OAI-PMH 2.0 interface for harvesting Dublin Core and other metadata.",
+      "url": "https://researchonline.lse.ac.uk/",
+      "baseURL": "https://researchonline.lse.ac.uk/cgi/oai2",
+      "metadataFormat": "oai_dc"
+    },
+    {
+      "@type": "DigitalLibrary",
+      "@id": "https://digital.library.lse.ac.uk/#digital-library",
+      "name": "LSE Digital Library",
+      "description": "Digitised and born-digital material from LSE Library collections on the Quartex platform, with per-item IIIF manifests and OAI-PMH metadata harvesting.",
+      "url": "https://digital.library.lse.ac.uk/about"
+    }
+  ]
+}

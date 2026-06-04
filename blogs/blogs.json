@@ -1,0 +1,14 @@
+{
+  "repo": "lse",
+  "feeds": [
+    {
+      "source": "https://blogs.lse.ac.uk/",
+      "feed_url": "https://blogs.lse.ac.uk/feed/",
+      "title": "LSE Blogs",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-03T00:00:00Z"
+}
