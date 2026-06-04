@@ -1,0 +1,45 @@
+---
+name: London School of Economics and Political Science
+description: London School of Economics and Political Science public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/lse/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      LSE has no unified public developer portal. The verifiable public footprint
+      is library/open-research infrastructure: the LSE Research Online EPrints
+      repository (OAI-PMH base URL registered with re3data/SHERPA/ROAR, but the
+      live endpoint returned HTTP 500 during review), the LSE Digital Library on
+      Quartex (IIIF manifests and OAI-PMH on request, live and returning 200),
+      and Ex Libris Alma/Primo discovery. Identity is federated SAML2 (Moodle SSO
+      live, 200). There is no official LSE GitHub organization — github.com/lse is
+      an unrelated systems-programming lab, and the only LSE course/timetable APIs
+      found were third-party community projects. No endpoints were fabricated;
+      gated and non-resolving interfaces are flagged honestly.
+    endpoints:
+      - url: https://www.lse.ac.uk/
+        status: 200
+        note: Official institution website, resolves.
+      - url: https://researchonline.lse.ac.uk/
+        status: 500
+        note: LSE Research Online (EPrints) repository root returned 500 at review time.
+      - url: https://researchonline.lse.ac.uk/cgi/oai2
+        status: 500
+        note: OAI-PMH endpoint (registered with re3data) returned 500 on Identify verb at review time.
+      - url: https://digital.library.lse.ac.uk/
+        status: 200
+        note: LSE Digital Library (Quartex); IIIF manifests and OAI-PMH per About page.
+      - url: https://digital.library.lse.ac.uk/about
+        status: 200
+        note: Documents IIIF manifest availability and OAI-PMH metadata harvesting.
+      - url: https://moodle.lse.ac.uk/auth/saml2/selectidp.php
+        status: 200
+        note: SAML2 SSO identity provider selection, federated via UK Access Management Federation.
+      - url: https://www.lse.ac.uk/library/using-the-library/catalogues
+        status: 200
+        note: Library catalogues page; discovery runs on Ex Libris Alma/Primo.
+      - url: https://github.com/lse
+        status: 200
+        note: NOT London School of Economics — unrelated systems-programming/kernel lab. No official LSE GitHub org found.

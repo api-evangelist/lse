@@ -1,0 +1,110 @@
+---
+aid: lse
+name: London School of Economics and Political Science
+description: >-
+  The London School of Economics and Political Science (LSE) is a public research
+  university in London, United Kingdom, ranked #38 in the QS World University Rankings
+  2025 and renowned for the social sciences. LSE does not operate a unified public
+  developer portal. Its confirmed public, machine-readable footprint centers on
+  library and open-research infrastructure: the LSE Research Online institutional
+  repository (EPrints) exposes metadata via OAI-PMH, the LSE Digital Library (Quartex)
+  offers IIIF manifests and OAI-PMH harvesting on request, and discovery runs on
+  Ex Libris Alma/Primo. Identity for student/staff systems is federated via SAML2
+  (Shibboleth / UK Access Management Federation). Most administrative and student
+  APIs are gated behind institutional credentials rather than openly documented.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/lse/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - United Kingdom
+  - Library
+  - Open Research
+  - Repository
+  - OAI-PMH
+  - IIIF
+  - Identity
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: lse:research-online-oai
+    name: LSE Research Online OAI-PMH
+    description: >-
+      LSE Research Online is LSE's institutional repository, built on EPrints 3,
+      containing journal articles, working papers, theses, reports, datasets and
+      other research outputs. It exposes an OAI-PMH 2.0 interface for harvesting
+      Dublin Core (and other) metadata at scale. The endpoint was returning HTTP
+      500 at the time of review, but the OAI-PMH base URL is registered with
+      re3data, SHERPA and ROAR.
+    humanURL: https://researchonline.lse.ac.uk/
+    baseURL: https://researchonline.lse.ac.uk/cgi/oai2
+    tags: [ Repository, OAI-PMH, Open Research, EPrints, Metadata ]
+    properties:
+      - type: Documentation
+        url: https://www.openarchives.org/OAI/openarchivesprotocol.html
+      - type: Registry
+        url: https://www.re3data.org/repository/r3d100011218
+  - aid: lse:digital-library
+    name: LSE Digital Library (IIIF / OAI-PMH)
+    description: >-
+      The LSE Digital Library provides access to digitised and born-digital
+      material from LSE Library collections via the Quartex platform. IIIF
+      manifests are available per item, and metadata can be downloaded at scale
+      via OAI-PMH; large-scale access is arranged by contacting the library.
+    humanURL: https://digital.library.lse.ac.uk/about
+    baseURL: https://digital.library.lse.ac.uk/
+    tags: [ Library, IIIF, OAI-PMH, Digital Collections, Metadata ]
+    properties:
+      - type: Documentation
+        url: https://digital.library.lse.ac.uk/about
+  - aid: lse:library-search
+    name: LSE Library Search (Ex Libris Alma / Primo)
+    description: >-
+      LSE Library discovery and resource management run on Ex Libris Alma and
+      Primo. Programmatic access (Primo Search/PNX, Alma REST APIs) follows the
+      standard Ex Libris developer model and is governed by institutional
+      configuration and credentials rather than a public LSE-branded API.
+    humanURL: https://www.lse.ac.uk/library/using-the-library/catalogues
+    tags: [ Library, Discovery, Alma, Primo, Catalogue ]
+    properties:
+      - type: Documentation
+        url: https://www.lse.ac.uk/library/using-the-library/catalogues
+      - type: Documentation
+        url: https://developers.exlibrisgroup.com/
+  - aid: lse:identity-saml
+    name: LSE Identity / SAML2 Single Sign-On
+    description: >-
+      LSE student, staff and learning systems (e.g. Moodle, LSE for You) are
+      protected by SAML2 single sign-on, federated through the UK Access
+      Management Federation (Shibboleth). This is an authentication interface for
+      affiliated users and federation members, not an open self-service API.
+    humanURL: https://moodle.lse.ac.uk/auth/saml2/selectidp.php
+    tags: [ Identity, Authentication, SAML, Shibboleth, SSO ]
+    properties:
+      - type: Documentation
+        url: https://moodle.lse.ac.uk/auth/saml2/selectidp.php
+common:
+  - type: Website
+    url: https://www.lse.ac.uk/
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/the-london-school-of-economics-and-political-science/
+  - type: Twitter
+    url: https://twitter.com/LSEnews
+  - type: Authentication
+    url: https://moodle.lse.ac.uk/auth/saml2/selectidp.php
+  - type: Plans
+    url: plans/lse-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/lse-rate-limits.yml
+  - type: FinOps
+    url: finops/lse-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
