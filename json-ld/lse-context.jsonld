@@ -70,7 +70,7 @@
   "name": "London School of Economics and Political Science",
   "description": "Public research university in London, United Kingdom, renowned for the social sciences. Its public machine-readable footprint centers on library and open-research infrastructure: the LSE Research Online institutional repository (EPrints, OAI-PMH), the LSE Digital Library (Quartex, IIIF / OAI-PMH), and Ex Libris Alma/Primo discovery, with identity federated via SAML2 (Shibboleth).",
   "url": "https://www.lse.ac.uk/",
-  "logo": "https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg",
+  "logo": "https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg",
   "sameAs": [
     "https://www.linkedin.com/school/the-london-school-of-economics-and-political-science/",
     "https://twitter.com/LSEnews",
