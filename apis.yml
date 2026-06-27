@@ -111,7 +111,7 @@ common:
     url: https://blogs.lse.ac.uk/feed/
   - type: JSONLD
     url: json-ld/lse-context.jsonld
-  - type: Blogs
+  - type: Blog
     url: blogs/blogs.json
 maintainers:
   - FN: Kin Lane
