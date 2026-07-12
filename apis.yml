@@ -89,6 +89,8 @@ apis:
       - type: Documentation
         url: https://moodle.lse.ac.uk/auth/saml2/selectidp.php
 common:
+  - type: DomainSecurity
+    url: security/lse-domain-security.yml
   - type: Website
     url: https://www.lse.ac.uk/
   - type: LinkedIn
