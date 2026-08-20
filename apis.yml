@@ -152,7 +152,20 @@ apis:
       host.
     humanURL: https://moodle.lse.ac.uk/
     baseURL: https://moodle.lse.ac.uk/mod/lti/certs.php
-    tags: [ Learning Management, LTI, Moodle, OAuth, OpenID Connect, Education ]
+    tags:
+    - Learning Management
+    - LTI
+    - Moodle
+    - Authentication
+    - OpenID Connect
+    - Education
+    tags_raw:
+    - Learning Management
+    - LTI
+    - Moodle
+    - OAuth
+    - OpenID Connect
+    - Education
     properties:
       - type: OpenAPI
         url: openapi/lse-moodle-lti-platform-openapi.yml
