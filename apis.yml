@@ -110,177 +110,172 @@ x-coverage:
   generated: '2026-08-19'
   method: probed
 apis:
-  - aid: lse:identity-federation
-    name: LSE Shibboleth Identity Provider (UK Access Management Federation)
-    x-operator: institution
-    description: >-
-      LSE operates its own SAML2 Shibboleth identity provider for staff, students and
-      library resource access, registered in the UK Access Management Federation
-      under entityID https://lse.ac.uk/idp with the scope lse.ac.uk. The IdP metadata
-      is published as machine-readable XML and returned 200 on 2026-08-19, listing
-      HTTP-Redirect, HTTP-POST and HTTP-POST-SimpleSign SSO bindings plus SAML1 and
-      SAML2 SOAP artifact resolution on port 8443. This is the clearest
-      institution-operated programmable surface LSE has — identity federation is
-      institution-operated by definition. One published Location is malformed
-      (gate.library.lse.ac.uk.lse.ac.uk, NXDOMAIN); a second LSE entity registered at
-      idp.lse.ac.uk self-labels "Test IdP - DO NOT USE" and is not recorded here.
-    humanURL: https://www.lse.ac.uk/
-    baseURL: https://gate.library.lse.ac.uk/idp/shibboleth
-    tags: [ Identity, Identity Federation, SAML, Shibboleth, SSO, UKAMF ]
-    properties:
-      - type: Authentication
-        url: authentication/lse-authentication.yml
-      - type: Conformance
-        url: conformance/lse-domain-standards.yml
-      - type: Documentation
-        url: https://www.ukfederation.org.uk/
-  - aid: lse:moodle-lti-platform
-    name: LSE Moodle LTI 1.3 Platform
-    x-operator: institution
-    description: >-
-      LSE runs its own Moodle virtual learning environment at moodle.lse.ac.uk on its
-      own registrable domain, resolving directly to AWS with no vendor CNAME (managed
-      hosting is provided by Catalyst IT, a Moodle Partner, but the LTI issuer, the
-      signing keys and the SAML SP entity are LSE's own). It exposes the IMS LTI 1.3 /
-      LTI Advantage platform endpoints an external tool integrates against: a live
-      JWKS at /mod/lti/certs.php returning one RSA RS256 key, an OAuth 2.0
-      client-credentials token endpoint at /mod/lti/token.php, and the OIDC
-      third-party-initiated login endpoint at /mod/lti/auth.php. Tool registration is
-      closed and held by LSE; there is no public self-service onboarding and no
-      .well-known discovery document. A SAML2 service-provider metadata document and
-      a credentialed Moodle Web Services REST endpoint sit alongside it on the same
-      host.
-    humanURL: https://moodle.lse.ac.uk/
-    baseURL: https://moodle.lse.ac.uk/mod/lti/certs.php
-    tags:
-    - Learning Management
-    - LTI
-    - Moodle
-    - Authentication
-    - OpenID Connect
-    - Education
-    tags_raw:
-    - Learning Management
-    - LTI
-    - Moodle
-    - OAuth
-    - OpenID Connect
-    - Education
-    properties:
-      - type: OpenAPI
-        url: openapi/lse-moodle-lti-platform-openapi.yml
-      - type: JSONSchema
-        url: json-schema/lse-lti-jwks-schema.json
-      - type: Examples
-        url: examples/lse-lti-jwks-response.json
-      - type: Errors
-        url: errors/lse-errors.yml
-      - type: Authentication
-        url: authentication/lse-authentication.yml
-      - type: Conformance
-        url: conformance/lse-domain-standards.yml
-      - type: Documentation
-        url: https://moodle.lse.ac.uk/auth/saml2/sp/metadata.php
-  - aid: lse:research-online-oai
-    name: LSE Research Online (EPrints, OAI-PMH)
-    x-operator: tenant
-    description: >-
-      LSE Research Online is LSE's institutional repository — LSE's research outputs,
-      LSE's metadata, LSE's registered OAI-PMH base URL and admin contact
-      (lseresearchonline@lse.ac.uk). It is not LSE's engineering: the host CNAMEs to
-      lse-eprints-cs.com, EPrints Services' managed hosting, and the software
-      self-reports as EPrints 3.4.6. The OAI-PMH 2.0 interface returned a valid
-      Identify response on 2026-08-19 (it was returning HTTP 500 at the June 2026
-      review and has since recovered), with deletedRecord=persistent and
-      earliestDatestamp 2010-10-01. Item-level export returns 401 and the search
-      endpoint is behind a Cloudflare challenge. The Identify response still carries
-      EPrints' default unconfigured rights text, so harvesters are told to assume no
-      rights are granted.
-    humanURL: https://researchonline.lse.ac.uk/
-    baseURL: https://researchonline.lse.ac.uk/cgi/oai2
-    tags: [ Research Repository, OAI-PMH, Open Research, EPrints, Metadata ]
-    properties:
-      - type: Documentation
-        url: https://www.openarchives.org/OAI/openarchivesprotocol.html
-      - type: Registry
-        url: https://www.re3data.org/repository/r3d100011218
-      - type: Conformance
-        url: conformance/lse-domain-standards.yml
-  - aid: lse:library-search
-    name: LSE Library Search (Ex Libris Primo VE / Alma)
-    x-operator: tenant
-    description: >-
-      LSE library discovery runs on Ex Libris Primo VE at librarysearch.lse.ac.uk,
-      which CNAMEs to lse.primo.exlibrisgroup.com and then eu00.primo.exlibrisgroup.com,
-      under LSE's institutional view identifier vid=44LSE_INST. Programmatic access
-      (Primo Search/PNX, Alma REST) follows the Ex Libris developer model and is
-      governed by LSE's institutional configuration and credentials. The tenancy is
-      LSE's; the API contract is Ex Libris'. The June 2026 profile recorded this
-      surface against www.lse.ac.uk, which misattributed a vendor platform to the
-      institution's own host; corrected 2026-08-19.
-    humanURL: https://librarysearch.lse.ac.uk/discovery/search?vid=44LSE_INST
-    baseURL: https://librarysearch.lse.ac.uk/discovery/
-    tags: [ Library, Library Catalog, Discovery, Alma, Primo, Ex Libris ]
-    properties:
-      - type: Documentation
-        url: https://www.lse.ac.uk/library/using-the-library/catalogues
-      - type: Documentation
-        url: https://developers.exlibrisgroup.com/
-  - aid: lse:digital-library
-    name: LSE Digital Library (Quartex — IIIF / OAI-PMH)
-    x-operator: tenant
-    description: >-
-      The LSE Digital Library publishes digitised and born-digital material from LSE
-      Library collections. The host CNAMEs to lse.custom.url.quartexcollections.com,
-      an LSE tenancy on Adam Matthew Digital's Quartex platform, and all assets and
-      service endpoints resolve to *.quartexcollections.com. The About page states
-      IIIF manifests are available per item and that metadata can be downloaded at
-      scale via OAI-PMH, directing large-scale users to library.enquiries@lse.ac.uk.
-      No OAI-PMH base URL is published — /oai and /OAI on this host return the site's
-      SPA shell with HTTP 200, which is a soft-404, not an endpoint. The collection
-      is LSE's; the platform, the manifests and the APIs are Quartex's.
-    humanURL: https://digital.library.lse.ac.uk/about
-    baseURL: https://digital.library.lse.ac.uk/
-    tags: [ Library, Digital Collections, IIIF, OAI-PMH, Metadata ]
-    properties:
-      - type: Documentation
-        url: https://digital.library.lse.ac.uk/about
-  - aid: lse:archives-catalogue
-    name: LSE Archives Catalogue (Epexio)
-    x-operator: tenant
-    description: >-
-      The LSE Library archive catalogue at archives.lse.ac.uk runs on Epexio, a hosted
-      archival discovery platform, served from AWS behind a certificate issued to
-      LSE's own hostname. The page markup carries the epexio-discover fingerprint and
-      /api returns a live JSON health response. No public API documentation, schema or
-      OAI-PMH endpoint was found for this surface — /oai returns 404. Recorded because
-      the tenancy is a real institutional fact; not credited as an LSE contract.
-    humanURL: https://archives.lse.ac.uk/
-    baseURL: https://archives.lse.ac.uk/api
-    tags: [ Library, Archives, Discovery, Epexio, Metadata ]
-    properties:
-      - type: Documentation
-        url: https://archives.lse.ac.uk/
-  - aid: lse:datacite-doi
-    name: LSE DOI Registration (DataCite)
-    x-operator: tenant
-    description: >-
-      LSE is a registered DataCite provider — member identifier lcqr, "London School
-      of Economics", memberType consortium_organization, region EMEA, registered
-      2020-09-01, linked to ROR https://ror.org/0090zs177. Three repositories mint
-      DOIs under it: bl.lse (institutional), lcqr.lsedl (LSE Digital Library) and
-      lcqr.plmezb (Houghton St Press). The registration and the minted identifiers are
-      LSE's; the API that exposes them is DataCite's, so this is recorded as a tenancy
-      rather than an LSE-operated interface. It is nonetheless one of the few genuinely
-      machine-queryable facts about LSE's research output.
-    humanURL: https://researchonline.lse.ac.uk/information.html
-    baseURL: https://api.datacite.org/providers/lcqr
-    tags: [ Research Repository, DataCite, DOI, Persistent Identifiers, Open Research ]
-    properties:
-      - type: Conformance
-        url: conformance/lse-domain-standards.yml
-      - type: Documentation
-        url: https://support.datacite.org/docs/api
+- aid: lse:identity-federation
+  name: LSE Shibboleth Identity Provider (UK Access Management Federation)
+  x-operator: institution
+  description: >-
+    LSE operates its own SAML2 Shibboleth identity provider for staff, students and library resource access,
+    registered in the UK Access Management Federation under entityID https://lse.ac.uk/idp with the scope
+    lse.ac.uk. The IdP metadata is published as machine-readable XML and returned 200 on 2026-08-19, listing
+    HTTP-Redirect, HTTP-POST and HTTP-POST-SimpleSign SSO bindings plus SAML1 and SAML2 SOAP artifact
+    resolution on port 8443. This is the clearest institution-operated programmable surface LSE has —
+    identity federation is institution-operated by definition. One published Location is malformed (gate.library.lse.ac.uk.lse.ac.uk,
+    NXDOMAIN); a second LSE entity registered at idp.lse.ac.uk self-labels "Test IdP - DO NOT USE" and
+    is not recorded here.
+  humanURL: https://www.lse.ac.uk/
+  baseURL: https://gate.library.lse.ac.uk/idp/shibboleth
+  tags:
+  - Identity
+  - Identity Federation
+  - SAML
+  - Shibboleth
+  - SSO
+  - UKAMF
+  properties:
+  - type: Authentication
+    url: authentication/lse-authentication.yml
+  - type: Conformance
+    url: conformance/lse-domain-standards.yml
+  - type: Documentation
+    url: https://www.ukfederation.org.uk/
+- aid: lse:research-online-oai
+  name: LSE Research Online (EPrints, OAI-PMH)
+  x-operator: tenant
+  description: >-
+    LSE Research Online is LSE's institutional repository — LSE's research outputs, LSE's metadata, LSE's
+    registered OAI-PMH base URL and admin contact (lseresearchonline@lse.ac.uk). It is not LSE's engineering:
+    the host CNAMEs to lse-eprints-cs.com, EPrints Services' managed hosting, and the software self-reports
+    as EPrints 3.4.6. The OAI-PMH 2.0 interface returned a valid Identify response on 2026-08-19 (it was
+    returning HTTP 500 at the June 2026 review and has since recovered), with deletedRecord=persistent
+    and earliestDatestamp 2010-10-01. Item-level export returns 401 and the search endpoint is behind
+    a Cloudflare challenge. The Identify response still carries EPrints' default unconfigured rights text,
+    so harvesters are told to assume no rights are granted.
+  humanURL: https://researchonline.lse.ac.uk/
+  baseURL: https://researchonline.lse.ac.uk/cgi/oai2
+  tags:
+  - Research Repository
+  - OAI-PMH
+  - Open Research
+  - EPrints
+  - Metadata
+  properties:
+  - type: Documentation
+    url: https://www.openarchives.org/OAI/openarchivesprotocol.html
+  - type: Registry
+    url: https://www.re3data.org/repository/r3d100011218
+  - type: Conformance
+    url: conformance/lse-domain-standards.yml
+- aid: lse:library-search
+  name: LSE Library Search (Ex Libris Primo VE / Alma)
+  x-operator: tenant
+  description: >-
+    LSE library discovery runs on Ex Libris Primo VE at librarysearch.lse.ac.uk, which CNAMEs to lse.primo.exlibrisgroup.com
+    and then eu00.primo.exlibrisgroup.com, under LSE's institutional view identifier vid=44LSE_INST. Programmatic
+    access (Primo Search/PNX, Alma REST) follows the Ex Libris developer model and is governed by LSE's
+    institutional configuration and credentials. The tenancy is LSE's; the API contract is Ex Libris'.
+    The June 2026 profile recorded this surface against www.lse.ac.uk, which misattributed a vendor platform
+    to the institution's own host; corrected 2026-08-19.
+  humanURL: https://librarysearch.lse.ac.uk/discovery/search?vid=44LSE_INST
+  baseURL: https://librarysearch.lse.ac.uk/discovery/
+  tags:
+  - Library
+  - Library Catalog
+  - Discovery
+  - Alma
+  - Primo
+  - Ex Libris
+  properties:
+  - type: Documentation
+    url: https://www.lse.ac.uk/library/using-the-library/catalogues
+  - type: Documentation
+    url: https://developers.exlibrisgroup.com/
+- aid: lse:digital-library
+  name: LSE Digital Library (Quartex — IIIF / OAI-PMH)
+  x-operator: tenant
+  description: >-
+    The LSE Digital Library publishes digitised and born-digital material from LSE Library collections.
+    The host CNAMEs to lse.custom.url.quartexcollections.com, an LSE tenancy on Adam Matthew Digital's
+    Quartex platform, and all assets and service endpoints resolve to *.quartexcollections.com. The About
+    page states IIIF manifests are available per item and that metadata can be downloaded at scale via
+    OAI-PMH, directing large-scale users to library.enquiries@lse.ac.uk. No OAI-PMH base URL is published
+    — /oai and /OAI on this host return the site's SPA shell with HTTP 200, which is a soft-404, not an
+    endpoint. The collection is LSE's; the platform, the manifests and the APIs are Quartex's.
+  humanURL: https://digital.library.lse.ac.uk/about
+  baseURL: https://digital.library.lse.ac.uk/
+  tags:
+  - Library
+  - Digital Collections
+  - IIIF
+  - OAI-PMH
+  - Metadata
+  properties:
+  - type: Documentation
+    url: https://digital.library.lse.ac.uk/about
+- aid: lse:archives-catalogue
+  name: LSE Archives Catalogue (Epexio)
+  x-operator: tenant
+  description: >-
+    The LSE Library archive catalogue at archives.lse.ac.uk runs on Epexio, a hosted archival discovery
+    platform, served from AWS behind a certificate issued to LSE's own hostname. The page markup carries
+    the epexio-discover fingerprint and /api returns a live JSON health response. No public API documentation,
+    schema or OAI-PMH endpoint was found for this surface — /oai returns 404. Recorded because the tenancy
+    is a real institutional fact; not credited as an LSE contract.
+  humanURL: https://archives.lse.ac.uk/
+  baseURL: https://archives.lse.ac.uk/api
+  tags:
+  - Library
+  - Archives
+  - Discovery
+  - Epexio
+  - Metadata
+  properties:
+  - type: Documentation
+    url: https://archives.lse.ac.uk/
+- aid: lse:datacite-doi
+  name: LSE DOI Registration (DataCite)
+  x-operator: tenant
+  description: >-
+    LSE is a registered DataCite provider — member identifier lcqr, "London School of Economics", memberType
+    consortium_organization, region EMEA, registered 2020-09-01, linked to ROR https://ror.org/0090zs177.
+    Three repositories mint DOIs under it: bl.lse (institutional), lcqr.lsedl (LSE Digital Library) and
+    lcqr.plmezb (Houghton St Press). The registration and the minted identifiers are LSE's; the API that
+    exposes them is DataCite's, so this is recorded as a tenancy rather than an LSE-operated interface.
+    It is nonetheless one of the few genuinely machine-queryable facts about LSE's research output.
+  humanURL: https://researchonline.lse.ac.uk/information.html
+  baseURL: https://api.datacite.org/providers/lcqr
+  tags:
+  - Research Repository
+  - DataCite
+  - DOI
+  - Persistent Identifiers
+  - Open Research
+  properties:
+  - type: Conformance
+    url: conformance/lse-domain-standards.yml
+  - type: Documentation
+    url: https://support.datacite.org/docs/api
+- aid: lse:lse-lti-api
+  name: London School of Economics and Political Science LTI API
+  description: IMS Global Learning Tools Interoperability 1.3 / LTI Advantage platform endpoints.
+  humanURL: https://www.lse.ac.uk/
+  baseURL: https://gate.library.lse.ac.uk/idp/shibboleth
+  tags:
+  - LTI
+  properties:
+  - type: OpenAPI
+    url: openapi/lse-lti-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/lse-lti-jwks-schema.json
+  - type: Examples
+    url: examples/lse-lti-jwks-response.json
+  - type: Errors
+    url: errors/lse-errors.yml
+  - type: Authentication
+    url: authentication/lse-authentication.yml
+  - type: Conformance
+    url: conformance/lse-domain-standards.yml
+  - type: Documentation
+    url: https://moodle.lse.ac.uk/auth/saml2/sp/metadata.php
 common:
   - type: Website
     url: https://www.lse.ac.uk/
