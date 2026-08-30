@@ -335,8 +335,6 @@ common:
     url: https://blogs.lse.ac.uk/feed/
   - type: JSONLD
     url: json-ld/lse-context.jsonld
-  - type: Blog
-    url: blogs/blogs.json
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
