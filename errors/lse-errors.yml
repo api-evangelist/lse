@@ -1,0 +1,57 @@
+---
+name: London School of Economics and Political Science — observed error semantics
+description: >-
+  Error responses observed on LSE's institution-operated programmable surfaces during
+  live probing on 2026-08-19. Every entry below was returned by a real request; none
+  is inferred from documentation, because LSE publishes no error reference for any of
+  these endpoints.
+generated: '2026-08-19'
+method: probed
+source: live HTTP probes of moodle.lse.ac.uk and researchonline.lse.ac.uk on 2026-08-19
+x-operator: institution
+errors:
+  - surface: LSE Moodle LTI 1.3 platform
+    x-operator: institution
+    url: https://moodle.lse.ac.uk/mod/lti/token.php
+    request: POST grant_type=client_credentials (no signed client assertion)
+    status: 400
+    content_type: text/html; charset=utf-8
+    body: '{ "error" : "invalid_request" }'
+    format: OAuth 2.0 error object (RFC 6749 section 5.2)
+    note: >-
+      Machine-readable OAuth error code, but served with a text/html Content-Type
+      rather than application/json — a client that dispatches on Content-Type will
+      not parse it.
+  - surface: LSE Moodle Web Services (REST)
+    x-operator: institution
+    url: https://moodle.lse.ac.uk/webservice/rest/server.php?wsfunction=core_webservice_get_site_info&moodlewsrestformat=json
+    request: GET without a service token
+    status: 200
+    body: '{"exception":"core\\exception\\moodle_exception","errorcode":"invalidtoken","message":"Invalid token - token not found"}'
+    format: Moodle exception object
+    note: >-
+      Returns HTTP 200 on an authentication failure. The error is only visible in the
+      body, so status-code-only clients read a denial as a success. Recorded as a
+      defect, not a feature.
+  - surface: LSE Moodle Web Services (token issue)
+    x-operator: institution
+    url: https://moodle.lse.ac.uk/login/token.php
+    request: GET with no parameters
+    status: 200
+    body: '{"error":"A required parameter (username) was missing","errorcode":"missingparam","stacktrace":null,"debuginfo":null,"reproductionlink":null}'
+    format: Moodle error object
+    note: Same HTTP-200-on-error pattern.
+  - surface: LSE Research Online (EPrints) — export/search
+    x-operator: tenant
+    url: https://researchonline.lse.ac.uk/cgi/search?q=brexit&output=JSON
+    status: 403
+    body: Cloudflare interstitial ("Just a moment...")
+    note: >-
+      Bot-managed, not absent. The endpoint is live behind a Cloudflare JavaScript
+      challenge; a browser User-Agent alone does not clear it.
+  - surface: LSE Research Online (EPrints) — item export
+    x-operator: tenant
+    url: https://researchonline.lse.ac.uk/cgi/export/eprint/3/JSON/lse-eprint-3.js
+    status: 401
+    body: Apache 401 Unauthorized
+    note: Item-level export is credentialed; OAI-PMH harvesting on the same host is open.

@@ -1,0 +1,192 @@
+openapi: 3.2.0
+info:
+  title: LSE Moodle 1.3 Platform Endpoints LTI API
+  version: '2026-08-19'
+  summary: The IMS LTI 1.3 / LTI Advantage platform endpoints exposed by the London School of Economics and Political Science virtual learning environment at moodle.lse.ac.uk. These are the endpoints an external tool provider integrates against when LSE registers it as an LTI tool.
+  description: 'LSE runs its own Moodle instance on its own registrable domain (moodle.lse.ac.uk, A records direct to AWS eu-west-1; managed hosting is provided by Catalyst IT, a Moodle Partner, whose security.txt is served at /.well-known/security.txt). The LTI 1.3 platform identity is LSE''s own: the issuer is https://moodle.lse.ac.uk, the signing keys published at /mod/lti/certs.php are unique to this deployment, and the registered technical contact on the sibling SAML2 SP metadata is lti.support@lse.ac.uk.
+
+    This document is DERIVED BY API EVANGELIST FROM LIVE PROBES. LSE has not published an OpenAPI description of these endpoints. It is recorded here so the institution''s genuinely institution-operated programmable surface is legible, and it must not be read as a contract LSE authored or warrants.'
+  contact:
+    name: LSE LTI Support
+    email: lti.support@lse.ac.uk
+    url: https://moodle.lse.ac.uk/
+  termsOfService: https://www.lse.ac.uk/lse-information/terms-of-use
+  license:
+    name: Not stated by the operator
+servers:
+- url: https://moodle.lse.ac.uk
+  description: LSE virtual learning environment (production)
+tags:
+- name: LTI
+  description: IMS Global Learning Tools Interoperability 1.3 / LTI Advantage platform endpoints.
+paths:
+  /mod/lti/certs.php:
+    get:
+      tags:
+      - LTI
+      operationId: getLtiPlatformJwks
+      summary: Retrieve the LTI 1.3 platform public key set (JWKS)
+      description: Returns the JSON Web Key Set holding the RSA public keys this platform uses to sign LTI 1.3 id_tokens. A tool provider fetches this to validate launch assertions issued by LSE. Observed live returning a single RS256 signing key.
+      security: []
+      responses:
+        '200':
+          description: The platform JSON Web Key Set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonWebKeySet'
+              examples:
+                observed:
+                  summary: Response observed 2026-08-19
+                  externalValue: ../examples/lse-lti-jwks-response.json
+  /mod/lti/token.php:
+    post:
+      tags:
+      - LTI
+      operationId: issueLtiServiceToken
+      summary: Exchange a signed client assertion for an LTI Advantage access token
+      description: OAuth 2.0 client-credentials token endpoint (RFC 7523 JWT bearer client assertion) used by registered LTI tools to obtain access tokens for the LTI Advantage services — Names and Role Provisioning, Assignment and Grade Services, Deep Linking. Requires a tool registration held by LSE; an unregistered caller receives invalid_request.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ClientCredentialsRequest'
+      responses:
+        '200':
+          description: Access token issued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessTokenResponse'
+        '400':
+          description: 'Malformed or unregistered request. Observed body on an unsigned grant_type=client_credentials POST: {"error":"invalid_request"}.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthError'
+  /mod/lti/auth.php:
+    get:
+      tags:
+      - LTI
+      operationId: ltiAuthorizationRedirect
+      summary: OIDC third-party-initiated login authorization endpoint
+      description: The OpenID Connect authorization endpoint in the LTI 1.3 third-party initiated login flow. A tool redirects the browser here; the platform responds with a signed id_token form-POSTed back to the tool's redirect URI. This is a browser redirect surface, not a JSON API.
+      security: []
+      parameters:
+      - name: scope
+        in: query
+        required: false
+        schema:
+          type: string
+          const: openid
+      - name: response_type
+        in: query
+        required: false
+        schema:
+          type: string
+          const: id_token
+      - name: client_id
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: redirect_uri
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uri
+      - name: login_hint
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: state
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: nonce
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: lti_message_hint
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: HTML. Observed 200 with an HTML body when called without launch parameters; a valid launch produces a self-submitting form POST to the tool redirect_uri carrying the id_token.
+          content:
+            text/html:
+              schema:
+                type: string
+components:
+  schemas:
+    ClientCredentialsRequest:
+      type: object
+      required:
+      - grant_type
+      properties:
+        grant_type:
+          type: string
+          const: client_credentials
+        client_assertion_type:
+          type: string
+          const: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+        client_assertion:
+          type: string
+          description: Signed JWT proving the tool's registered identity.
+        scope:
+          type: string
+          description: Space-delimited LTI Advantage service scopes granted to the tool registration.
+    OAuthError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: 'OAuth 2.0 error code. Observed value: invalid_request.'
+        error_description:
+          type: string
+    JsonWebKeySet:
+      $ref: ../json-schema/lse-lti-jwks-schema.json
+    AccessTokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          const: Bearer
+        expires_in:
+          type: integer
+        scope:
+          type: string
+x-operator: institution
+x-operator-evidence:
+  registrable-domain: lse.ac.uk
+  host: moodle.lse.ac.uk
+  dns: A records (no vendor CNAME) — 108.131.193.25, 54.194.193.120, 54.246.111.86
+  lti-issuer: https://moodle.lse.ac.uk
+  managed-hosting: Catalyst IT (Moodle Partner) — hosting only; the LTI issuer, keys and SAML SP entity are LSE's
+x-provenance:
+  generated: '2026-08-19'
+  method: derived
+  source: https://moodle.lse.ac.uk/mod/lti/certs.php
+  derived-from-probes:
+  - url: https://moodle.lse.ac.uk/mod/lti/certs.php
+    status: 200
+    content-type: application/json; charset=utf-8
+  - url: https://moodle.lse.ac.uk/mod/lti/token.php
+    method: POST
+    status: 400
+    content-type: text/html; charset=utf-8
+    body: '{ "error" : "invalid_request" }'
+  - url: https://moodle.lse.ac.uk/mod/lti/auth.php
+    status: 200

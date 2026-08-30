@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/lse/refs/heads/main/json-schema/lse-lti-jwks-schema.json",
+  "title": "LSE Moodle LTI 1.3 Platform JSON Web Key Set",
+  "description": "Structure of the JWKS returned by https://moodle.lse.ac.uk/mod/lti/certs.php, the LTI 1.3 platform signing key set for the London School of Economics and Political Science virtual learning environment. Derived from the live response observed 2026-08-19, constrained to RFC 7517 (JWK) and RFC 7518 (JWA).",
+  "x-provenance": {
+    "generated": "2026-08-19",
+    "method": "derived",
+    "source": "https://moodle.lse.ac.uk/mod/lti/certs.php",
+    "note": "Derived by API Evangelist from the observed 200 response. LSE publishes no schema for this endpoint.",
+    "x-operator": "institution"
+  },
+  "type": "object",
+  "required": ["keys"],
+  "additionalProperties": false,
+  "properties": {
+    "keys": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Public keys the platform uses to sign LTI 1.3 id_tokens.",
+      "items": {
+        "type": "object",
+        "required": ["kty", "alg", "kid", "e", "n"],
+        "properties": {
+          "kty": { "type": "string", "const": "RSA", "description": "Key type. Observed: RSA." },
+          "alg": { "type": "string", "const": "RS256", "description": "Signing algorithm. Observed: RS256." },
+          "kid": { "type": "string", "description": "Key identifier carried in the id_token header so a tool can select the right key." },
+          "e": { "type": "string", "description": "RSA public exponent, base64url. Observed: AQAB." },
+          "n": { "type": "string", "description": "RSA modulus, base64url." },
+          "use": { "type": "string", "enum": ["sig"], "description": "Public key use. Observed: sig." }
+        },
+        "additionalProperties": true
+      }
+    }
+  }
+}

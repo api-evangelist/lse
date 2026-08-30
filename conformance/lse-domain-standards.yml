@@ -1,0 +1,137 @@
+---
+name: London School of Economics and Political Science — education-regime domain standard conformance
+description: >-
+  Conformance of LSE's surfaces against the Kin Score `education` regulatory regime
+  standards[] — scim, lti, oneroster, ed-fi, caliper, qti, oai-pmh, shibboleth, saml,
+  orcid, datacite, crossref. Every hit below points at an exact location that was
+  fetched and returned the recorded status on 2026-08-19. Reward-only: standards with
+  no verified evidence are recorded as not_found, never as assumed.
+generated: '2026-08-19'
+method: probed
+source: live HTTP probes, UK Access Management Federation metadata, and the DataCite REST API, 2026-08-19
+conformance:
+  - standard: lti
+    name: IMS Global Learning Tools Interoperability 1.3 / LTI Advantage
+    status: conformant
+    x-operator: institution
+    evidence:
+      - location: https://moodle.lse.ac.uk/mod/lti/certs.php
+        status: 200
+        proof: >-
+          Live JWKS returning one RSA RS256 signing key (kid fc7fb5f6ed67a729c4d6),
+          the LTI 1.3 platform key set for issuer https://moodle.lse.ac.uk.
+      - location: https://moodle.lse.ac.uk/mod/lti/token.php
+        status: 400
+        proof: >-
+          Live OAuth 2.0 client-credentials token endpoint for LTI Advantage
+          services; returns {"error":"invalid_request"} to an unregistered caller.
+      - location: https://moodle.lse.ac.uk/mod/lti/auth.php
+        status: 200
+        proof: OIDC third-party-initiated login authorization endpoint.
+    contract: openapi/lse-moodle-lti-platform-openapi.yml
+  - standard: shibboleth
+    name: Shibboleth identity provider
+    status: conformant
+    x-operator: institution
+    evidence:
+      - location: https://gate.library.lse.ac.uk/idp/shibboleth
+        status: 200
+        proof: >-
+          Live Shibboleth IdP metadata (application/xml, 3377 bytes) for entityID
+          https://lse.ac.uk/idp, carrying shibmd:Scope lse.ac.uk.
+      - location: http://metadata.ukfederation.org.uk/ukfederation-metadata.xml
+        status: 200
+        proof: >-
+          LSE is a registered member of the UK Access Management Federation; the
+          aggregate carries the EntityDescriptor for https://lse.ac.uk/idp with
+          OrganizationDisplayName "LSE - London School of Economics and Political Science".
+  - standard: saml
+    name: SAML 2.0
+    status: conformant
+    x-operator: institution
+    evidence:
+      - location: https://gate.library.lse.ac.uk/idp/shibboleth
+        status: 200
+        proof: >-
+          IDPSSODescriptor advertising urn:oasis:names:tc:SAML:2.0:protocol over
+          HTTP-Redirect, HTTP-POST and HTTP-POST-SimpleSign bindings.
+      - location: https://moodle.lse.ac.uk/auth/saml2/sp/metadata.php
+        status: 200
+        proof: >-
+          SPSSODescriptor for entityID https://moodle.lse.ac.uk/auth/saml2/sp/metadata.php
+          with AuthnRequestsSigned=true.
+    caveat: >-
+      One published SSO Location is malformed (doubled host
+      gate.library.lse.ac.uk.lse.ac.uk, NXDOMAIN). Conformance is recorded on the
+      resolvable bindings; the defect is recorded in authentication/lse-authentication.yml.
+  - standard: oai-pmh
+    name: Open Archives Initiative Protocol for Metadata Harvesting 2.0
+    status: conformant
+    x-operator: tenant
+    evidence:
+      - location: https://researchonline.lse.ac.uk/cgi/oai2?verb=Identify
+        status: 200
+        proof: >-
+          Valid OAI-PMH 2.0 Identify response. repositoryName "LSE Research Online",
+          baseURL https://researchonline.lse.ac.uk/cgi/oai2, adminEmail
+          lseresearchonline@lse.ac.uk, repositoryIdentifier researchonline.lse.ac.uk,
+          earliestDatestamp 2010-10-01T08:40:47Z, granularity YYYY-MM-DDThh:mm:ssZ,
+          software EPrints 3.4.6.
+      - location: https://researchonline.lse.ac.uk/cgi/oai2?verb=ListMetadataFormats
+        status: 200
+        proof: Metadata format enumeration returns a valid OAI-PMH response.
+    note: >-
+      Recorded as tenant, not institution: researchonline.lse.ac.uk is a CNAME to
+      lse-eprints-cs.com (EPrints Services managed hosting). The data, the base URL,
+      the identifier and the admin contact are LSE's; the software and the operation
+      are EPrints Services'.
+    caveat: >-
+      The Identify response carries EPrints' default unconfigured policy text — "No
+      metadata policy defined. This server has not yet been fully configured." — so a
+      harvester is told to assume no rights are granted. Protocol conformance is real;
+      the rights signal is a stub.
+  - standard: datacite
+    name: DataCite DOI registration
+    status: conformant
+    x-operator: tenant
+    evidence:
+      - location: https://api.datacite.org/providers/lcqr
+        status: 200
+        proof: >-
+          LSE is DataCite provider `lcqr` ("London School of Economics"),
+          memberType consortium_organization, region EMEA, created 2020-09-01,
+          rorId https://ror.org/0090zs177.
+      - location: https://api.datacite.org/repositories?provider-id=lcqr
+        status: 200
+        proof: >-
+          Three registered repositories under LSE — bl.lse (institutional),
+          lcqr.lsedl (LSE Digital Library), lcqr.plmezb (Houghton St Press).
+    note: >-
+      Institution-level registration is genuinely LSE's; DOI minting runs on DataCite
+      infrastructure, so the surface is recorded as tenant.
+  - standard: scim
+    status: not_found
+    searched: https://moodle.lse.ac.uk/ (no /scim or /ServiceProviderConfig), lse.ac.uk subdomain sweep
+  - standard: oneroster
+    status: not_found
+    searched: moodle.lse.ac.uk, lse.ac.uk subdomain sweep
+  - standard: ed-fi
+    status: not_found
+    note: Ed-Fi is a US K-12/state-agency standard; no UK higher-education deployment expected or found.
+  - standard: caliper
+    status: not_found
+    searched: moodle.lse.ac.uk (no /caliper or event-store endpoint exposed publicly)
+  - standard: qti
+    status: not_found
+    note: >-
+      Moodle supports QTI import, but no public QTI surface is exposed by
+      moodle.lse.ac.uk and none was found.
+  - standard: orcid
+    status: not_found
+    note: >-
+      LSE Research Online records carry author metadata, but no ORCID member-API
+      integration or public ORCID surface operated by LSE was verified. Not claimed
+      without evidence.
+  - standard: crossref
+    status: not_found
+    searched: https://api.crossref.org/members?query=London+School+of+Economics — no LSE member record returned
