@@ -1,45 +1,152 @@
 ---
 name: London School of Economics and Political Science
-description: London School of Economics and Political Science public developer/API footprint review for APIs.json cataloging.
+description: London School of Economics and Political Science public developer/API footprint review for
+  APIs.json cataloging.
 url: https://raw.githubusercontent.com/api-evangelist/lse/refs/heads/main/review.yml
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reviews:
-  - date: '2026-06-03'
-    rating: 2
-    summary: >-
-      LSE has no unified public developer portal. The verifiable public footprint
-      is library/open-research infrastructure: the LSE Research Online EPrints
-      repository (OAI-PMH base URL registered with re3data/SHERPA/ROAR, but the
-      live endpoint returned HTTP 500 during review), the LSE Digital Library on
-      Quartex (IIIF manifests and OAI-PMH on request, live and returning 200),
-      and Ex Libris Alma/Primo discovery. Identity is federated SAML2 (Moodle SSO
-      live, 200). There is no official LSE GitHub organization — github.com/lse is
-      an unrelated systems-programming lab, and the only LSE course/timetable APIs
-      found were third-party community projects. No endpoints were fabricated;
-      gated and non-resolving interfaces are flagged honestly.
-    endpoints:
-      - url: https://www.lse.ac.uk/
-        status: 200
-        note: Official institution website, resolves.
-      - url: https://researchonline.lse.ac.uk/
-        status: 500
-        note: LSE Research Online (EPrints) repository root returned 500 at review time.
-      - url: https://researchonline.lse.ac.uk/cgi/oai2
-        status: 500
-        note: OAI-PMH endpoint (registered with re3data) returned 500 on Identify verb at review time.
-      - url: https://digital.library.lse.ac.uk/
-        status: 200
-        note: LSE Digital Library (Quartex); IIIF manifests and OAI-PMH per About page.
-      - url: https://digital.library.lse.ac.uk/about
-        status: 200
-        note: Documents IIIF manifest availability and OAI-PMH metadata harvesting.
-      - url: https://moodle.lse.ac.uk/auth/saml2/selectidp.php
-        status: 200
-        note: SAML2 SSO identity provider selection, federated via UK Access Management Federation.
-      - url: https://www.lse.ac.uk/library/using-the-library/catalogues
-        status: 200
-        note: Library catalogues page; discovery runs on Ex Libris Alma/Primo.
-      - url: https://github.com/lse
-        status: 200
-        note: NOT London School of Economics — unrelated systems-programming/kernel lab. No official LSE GitHub org found.
+- date: '2026-06-03'
+  rating: 2
+  summary: 'LSE has no unified public developer portal. The verifiable public footprint is library/open-research
+    infrastructure: the LSE Research Online EPrints repository (OAI-PMH base URL registered with re3data/SHERPA/ROAR,
+    but the live endpoint returned HTTP 500 during review), the LSE Digital Library on Quartex (IIIF manifests
+    and OAI-PMH on request, live and returning 200), and Ex Libris Alma/Primo discovery. Identity is federated
+    SAML2 (Moodle SSO live, 200). There is no official LSE GitHub organization — github.com/lse is an
+    unrelated systems-programming lab, and the only LSE course/timetable APIs found were third-party community
+    projects. No endpoints were fabricated; gated and non-resolving interfaces are flagged honestly.'
+  endpoints:
+  - url: https://www.lse.ac.uk/
+    status: 200
+    note: Official institution website, resolves.
+  - url: https://researchonline.lse.ac.uk/
+    status: 500
+    note: LSE Research Online (EPrints) repository root returned 500 at review time.
+  - url: https://researchonline.lse.ac.uk/cgi/oai2
+    status: 500
+    note: OAI-PMH endpoint (registered with re3data) returned 500 on Identify verb at review time.
+  - url: https://digital.library.lse.ac.uk/
+    status: 200
+    note: LSE Digital Library (Quartex); IIIF manifests and OAI-PMH per About page.
+  - url: https://digital.library.lse.ac.uk/about
+    status: 200
+    note: Documents IIIF manifest availability and OAI-PMH metadata harvesting.
+  - url: https://moodle.lse.ac.uk/auth/saml2/selectidp.php
+    status: 200
+    note: SAML2 SSO identity provider selection, federated via UK Access Management Federation.
+  - url: https://www.lse.ac.uk/library/using-the-library/catalogues
+    status: 200
+    note: Library catalogues page; discovery runs on Ex Libris Alma/Primo.
+  - url: https://github.com/lse
+    status: 200
+    note: NOT London School of Economics — unrelated systems-programming/kernel lab. No official LSE GitHub
+      org found.
+- date: '2026-08-19'
+  rating: 3
+  summary: 'University-pipeline re-profile against the operator axis. The June 2026 review was honest
+    about absence but had not settled WHO OPERATES each surface, and it attributed Ex Libris library discovery
+    to www.lse.ac.uk. Corrected: LSE has exactly two institution-operated machine-readable surfaces, both
+    verified live. (1) A SAML2 Shibboleth identity provider, entityID https://lse.ac.uk/idp, registered
+    in the UK Access Management Federation, metadata served at https://gate.library.lse.ac.uk/idp/shibboleth
+    (200, application/xml, shibmd:Scope lse.ac.uk). (2) An IMS LTI 1.3 platform on LSE''s own Moodle —
+    live JWKS, OAuth 2.0 client-credentials token endpoint and OIDC authorization endpoint, issuer https://moodle.lse.ac.uk,
+    technical contact lti.support@lse.ac.uk. Five surfaces are LSE tenancies on vendor platforms and are
+    recorded as tenant, not institution: EPrints Services (researchonline.lse.ac.uk CNAMEs lse-eprints-cs.com),
+    Ex Libris Primo VE (librarysearch.lse.ac.uk CNAMEs lse.primo.exlibrisgroup.com, vid=44LSE_INST), Quartex
+    (digital.library.lse.ac.uk CNAMEs quartexcollections.com), Epexio (archives.lse.ac.uk), and DataCite
+    (provider lcqr, ROR 0090zs177, three repositories). The OAI-PMH endpoint that returned 500 in June
+    now returns a valid Identify (EPrints 3.4.6, deletedRecord=persistent). Two defects found in LSE''s
+    own published federation metadata: a POST-SimpleSign SSO Location with a doubled host (gate.library.lse.ac.uk.lse.ac.uk,
+    NXDOMAIN), and a stale second entity self-labelled ''Test IdP - DO NOT USE'' at idp.lse.ac.uk, which
+    is excluded as a placeholder rather than counted as a surface. Moodle Web Services return HTTP 200
+    on authentication failure. Still no developer portal, no open data portal, no course/timetable API,
+    no llms.txt, no security.txt on www, and no official GitHub organisation. Five education-regime domain
+    standards confirmed with evidence: lti, shibboleth, saml, oai-pmh, datacite. No endpoints fabricated.'
+  endpoints:
+  - url: https://gate.library.lse.ac.uk/idp/shibboleth
+    status: 200
+    note: INSTITUTION — live Shibboleth IdP SAML2 metadata for entityID https://lse.ac.uk/idp.
+  - url: https://moodle.lse.ac.uk/mod/lti/certs.php
+    status: 200
+    note: INSTITUTION — live LTI 1.3 platform JWKS, one RSA RS256 key (kid fc7fb5f6ed67a729c4d6).
+  - url: https://moodle.lse.ac.uk/mod/lti/token.php
+    status: 400
+    note: INSTITUTION — live LTI Advantage OAuth2 token endpoint; {"error":"invalid_request"} to an unregistered
+      caller.
+  - url: https://moodle.lse.ac.uk/mod/lti/auth.php
+    status: 200
+    note: INSTITUTION — OIDC third-party-initiated login authorization endpoint.
+  - url: https://moodle.lse.ac.uk/auth/saml2/sp/metadata.php
+    status: 200
+    note: INSTITUTION — Moodle SAML2 SP metadata; AuthnRequestsSigned=true, contact lti.support@lse.ac.uk.
+  - url: https://moodle.lse.ac.uk/webservice/rest/server.php?wsfunction=core_webservice_get_site_info&moodlewsrestformat=json
+    status: 200
+    note: INSTITUTION — Moodle Web Services live but token-gated; returns 200 with an invalidtoken error
+      body (HTTP-200-on-error defect).
+  - url: https://moodle.lse.ac.uk/.well-known/security.txt
+    status: 200
+    note: Served, but it is Catalyst IT Australia's canonical security.txt — the Moodle hosting partner's,
+      not LSE's.
+  - url: https://researchonline.lse.ac.uk/cgi/oai2?verb=Identify
+    status: 200
+    note: TENANT — valid OAI-PMH 2.0 Identify. Recovered since June 2026 (was 500). EPrints 3.4.6 on lse-eprints-cs.com.
+  - url: https://researchonline.lse.ac.uk/cgi/search?q=brexit&output=JSON
+    status: 403
+    note: TENANT — live behind a Cloudflare JavaScript challenge. Gated, not absent.
+  - url: https://researchonline.lse.ac.uk/cgi/export/eprint/3/JSON/lse-eprint-3.js
+    status: 401
+    note: TENANT — item-level export is credentialed.
+  - url: https://librarysearch.lse.ac.uk/discovery/search?vid=44LSE_INST
+    status: 200
+    note: TENANT — Ex Libris Primo VE; CNAME lse.primo.exlibrisgroup.com. June profile wrongly filed this
+      under www.lse.ac.uk.
+  - url: https://digital.library.lse.ac.uk/about
+    status: 200
+    note: TENANT — Quartex; CNAME lse.custom.url.quartexcollections.com. States IIIF manifests per item
+      and OAI-PMH on request.
+  - url: https://digital.library.lse.ac.uk/oai?verb=Identify
+    status: 200
+    note: SOFT-404 — returns the site SPA shell, not an OAI-PMH response. No OAI base URL is published
+      for the digital library.
+  - url: https://archives.lse.ac.uk/api
+    status: 200
+    note: TENANT — LSE Archives Catalogue on Epexio; /api returns {"status":"OK"}. No public API docs;
+      /oai is 404.
+  - url: https://api.datacite.org/providers/lcqr
+    status: 200
+    note: TENANT — LSE is DataCite provider lcqr, ROR https://ror.org/0090zs177, three repositories.
+  - url: https://idp.lse.ac.uk/idp/shibboleth
+    status: 0
+    note: PLACEHOLDER — registered in UKAMF as "LSE ... Test IdP - DO NOT USE"; host does not resolve.
+      Deliberately NOT recorded as a surface.
+  - url: https://gate.library.lse.ac.uk.lse.ac.uk/idp/profile/SAML2/POST-SimpleSign/SSO
+    status: 0
+    note: DEFECT — doubled host published in LSE federation metadata; NXDOMAIN.
+  - url: https://api.lse.ac.uk/
+    status: 0
+    note: NXDOMAIN — no institutional API host.
+  - url: https://data.lse.ac.uk/
+    status: 0
+    note: NXDOMAIN — no open data portal.
+  - url: https://developer.lse.ac.uk/
+    status: 0
+    note: NXDOMAIN — no developer portal.
+  - url: https://opendata.lse.ac.uk/
+    status: 0
+    note: NXDOMAIN.
+  - url: https://www.lse.ac.uk/llms.txt
+    status: 404
+    note: No agent-facing catalog.
+  - url: https://www.lse.ac.uk/.well-known/security.txt
+    status: 404
+    note: No security contact published on the primary web host.
+  - url: https://press.lse.ac.uk/
+    status: 403
+    note: LSE Press / Houghton St Press returns 403 Forbidden. Not recorded as a surface.
+  - url: https://info.lse.ac.uk/staff/divisions/Eden-Centre/Artificial-Intelligence-Education-and-Assessment/School-position-on-generative-AI
+    status: 200
+    note: AIPolicy — LSE School position on generative AI. Governance document, not an API artifact.
+  - url: https://github.com/lse
+    status: 200
+    note: NOT London School of Economics — unrelated systems-programming lab. No official LSE GitHub org
+      found (re-confirmed 2026-08-19).

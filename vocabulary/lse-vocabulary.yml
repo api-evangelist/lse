@@ -1,0 +1,66 @@
+---
+name: London School of Economics and Political Science — vocabularies in use
+description: >-
+  The machine-readable vocabularies actually observed on LSE-affiliated surfaces,
+  each attributed to the party that operates the surface carrying it. LSE authors
+  none of these vocabularies; it deploys them. Recorded so the institution's
+  programmable footprint is legible without crediting it with vocabulary authorship.
+generated: '2026-08-19'
+method: probed
+source: live HTTP probes, 2026-08-19
+vocabularies:
+  - name: SAML 2.0 metadata
+    namespace: urn:oasis:names:tc:SAML:2.0:metadata
+    x-operator: institution
+    observed_at: https://gate.library.lse.ac.uk/idp/shibboleth
+    status: 200
+    authored_by: OASIS
+  - name: Shibboleth metadata extensions
+    namespace: urn:mace:shibboleth:metadata:1.0
+    x-operator: institution
+    observed_at: https://gate.library.lse.ac.uk/idp/shibboleth
+    status: 200
+    authored_by: Internet2 / Shibboleth Consortium
+    note: Carries shibmd:Scope = lse.ac.uk.
+  - name: JSON Web Key (JWK)
+    namespace: RFC 7517 / RFC 7518
+    x-operator: institution
+    observed_at: https://moodle.lse.ac.uk/mod/lti/certs.php
+    status: 200
+    authored_by: IETF
+    schema: json-schema/lse-lti-jwks-schema.json
+  - name: OAuth 2.0 error object
+    namespace: RFC 6749 section 5.2
+    x-operator: institution
+    observed_at: https://moodle.lse.ac.uk/mod/lti/token.php
+    status: 400
+    authored_by: IETF
+  - name: OAI-PMH 2.0
+    namespace: http://www.openarchives.org/OAI/2.0/
+    x-operator: tenant
+    observed_at: https://researchonline.lse.ac.uk/cgi/oai2?verb=Identify
+    status: 200
+    authored_by: Open Archives Initiative
+  - name: OAI identifier
+    namespace: http://www.openarchives.org/OAI/2.0/oai-identifier
+    x-operator: tenant
+    observed_at: https://researchonline.lse.ac.uk/cgi/oai2?verb=Identify
+    status: 200
+    authored_by: Open Archives Initiative
+    note: repositoryIdentifier researchonline.lse.ac.uk, sample oai:researchonline.lse.ac.uk:3
+  - name: EPrints OAI description
+    namespace: http://www.openarchives.org/OAI/1.1/eprints
+    x-operator: tenant
+    observed_at: https://researchonline.lse.ac.uk/cgi/oai2?verb=Identify
+    status: 200
+    authored_by: University of Southampton / EPrints
+  - name: IIIF Presentation
+    namespace: http://iiif.io/api/presentation/
+    x-operator: tenant
+    observed_at: https://digital.library.lse.ac.uk/about
+    status: 200
+    authored_by: IIIF Consortium
+    note: >-
+      The About page states IIIF manifests are available per item and directs
+      large-scale users to library.enquiries@lse.ac.uk. Manifests are served from
+      Quartex infrastructure; no institution-hosted manifest endpoint was found.

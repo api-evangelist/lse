@@ -3,9 +3,7 @@ info:
   title: LSE Moodle 1.3 Platform Endpoints LTI API
   version: '2026-08-19'
   summary: The IMS LTI 1.3 / LTI Advantage platform endpoints exposed by the London School of Economics and Political Science virtual learning environment at moodle.lse.ac.uk. These are the endpoints an external tool provider integrates against when LSE registers it as an LTI tool.
-  description: 'LSE runs its own Moodle instance on its own registrable domain (moodle.lse.ac.uk, A records direct to AWS eu-west-1; managed hosting is provided by Catalyst IT, a Moodle Partner, whose security.txt is served at /.well-known/security.txt). The LTI 1.3 platform identity is LSE''s own: the issuer is https://moodle.lse.ac.uk, the signing keys published at /mod/lti/certs.php are unique to this deployment, and the registered technical contact on the sibling SAML2 SP metadata is lti.support@lse.ac.uk.
-
-    This document is DERIVED BY API EVANGELIST FROM LIVE PROBES. LSE has not published an OpenAPI description of these endpoints. It is recorded here so the institution''s genuinely institution-operated programmable surface is legible, and it must not be read as a contract LSE authored or warrants.'
+  description: LSE runs its own Moodle instance on its own registrable domain (moodle.lse.ac.uk, A records direct to AWS eu-west-1; managed hosting is provided by Catalyst IT, a Moodle Partner, whose security.txt is served at /.well-known/security.txt).
   contact:
     name: LSE LTI Support
     email: lti.support@lse.ac.uk
@@ -127,6 +125,28 @@ paths:
                 type: string
 components:
   schemas:
+    OAuthError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: 'OAuth 2.0 error code. Observed value: invalid_request.'
+        error_description:
+          type: string
+    AccessTokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          const: Bearer
+        expires_in:
+          type: integer
+        scope:
+          type: string
     ClientCredentialsRequest:
       type: object
       required:
@@ -144,30 +164,8 @@ components:
         scope:
           type: string
           description: Space-delimited LTI Advantage service scopes granted to the tool registration.
-    OAuthError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: 'OAuth 2.0 error code. Observed value: invalid_request.'
-        error_description:
-          type: string
     JsonWebKeySet:
       $ref: ../json-schema/lse-lti-jwks-schema.json
-    AccessTokenResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-        token_type:
-          type: string
-          const: Bearer
-        expires_in:
-          type: integer
-        scope:
-          type: string
 x-operator: institution
 x-operator-evidence:
   registrable-domain: lse.ac.uk

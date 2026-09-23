@@ -1,0 +1,58 @@
+---
+name: London School of Economics and Political Science — surface lifecycle posture
+description: >-
+  Versioning, deprecation and change-communication posture across LSE's programmable
+  surfaces. LSE publishes no versioning policy, no deprecation policy, no changelog
+  and no status page for any interface it operates. What is recorded below is the
+  version information the software itself discloses, plus the absences, stated plainly.
+generated: '2026-08-19'
+method: probed
+source: live HTTP probes, 2026-08-19
+lifecycle:
+  versioning_policy: none_published
+  deprecation_policy: none_published
+  changelog: none_published
+  status_page: none_found
+  sunset_headers: not_observed
+  notes: >-
+    No developer portal, no API terms, no support channel dedicated to programmatic
+    consumers. The only contact routes found are role mailboxes —
+    lti.support@lse.ac.uk (LTI), lseresearchonline@lse.ac.uk (repository) and
+    library.enquiries@lse.ac.uk (IIIF at scale).
+  surfaces:
+    - surface: LSE Moodle LTI 1.3 platform
+      x-operator: institution
+      version_disclosed: >-
+        None. LTI version is fixed by the standard (1.3); the Moodle release is not
+        exposed on the public endpoints.
+      contact: lti.support@lse.ac.uk
+      deprecation_signal: none
+    - surface: LSE Shibboleth IdP
+      x-operator: institution
+      version_disclosed: None in metadata.
+      federation_lifecycle: >-
+        Governed by UK Access Management Federation registration; entity changes
+        propagate through the federation metadata aggregate rather than an LSE
+        changelog.
+      deprecation_signal: >-
+        A non-production entity is still registered in UKAMF and self-labels
+        "Test IdP - DO NOT USE" (https://idp.lse.ac.uk/idp/shibboleth). The host does
+        not resolve. Stale federation registration is the closest thing to a
+        deprecation signal LSE emits, and it is unmanaged.
+    - surface: LSE Research Online (EPrints)
+      x-operator: tenant
+      version_disclosed: EPrints 3.4.6 (self-reported in the OAI-PMH Identify response).
+      deleted_record_policy: persistent
+      granularity: YYYY-MM-DDThh:mm:ssZ
+      earliest_datestamp: '2010-10-01T08:40:47Z'
+      note: >-
+        deletedRecord=persistent is a real lifecycle guarantee to harvesters — deletes
+        are tombstoned, not vanished — and it is the strongest lifecycle signal in
+        LSE's entire footprint. It is EPrints' default behaviour, not an LSE policy
+        decision.
+    - surface: LSE Library Search (Ex Libris Primo VE)
+      x-operator: tenant
+      version_disclosed: None. Lifecycle follows Ex Libris' release train.
+    - surface: LSE Digital Library (Quartex)
+      x-operator: tenant
+      version_disclosed: None. Lifecycle follows Quartex releases.
