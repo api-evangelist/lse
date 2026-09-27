@@ -226,6 +226,7 @@ apis:
   - type: Documentation
     url: https://digital.library.lse.ac.uk/about
 - aid: lse:archives-catalogue
+  x-published: false
   name: LSE Archives Catalogue (Epexio)
   x-operator: tenant
   description: >-
