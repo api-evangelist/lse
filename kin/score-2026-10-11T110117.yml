@@ -1,24 +1,22 @@
-# Kin Score artifact — lse — 2026-09-08T214843
+# Kin Score artifact — lse — 2026-10-11T110117
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: lse
-  schema_version: 0.20.0
-  scored_at: '2026-09-08'
-  run_ts: 2026-09-08T214843
-  composite: 35.1
+  schema_version: 0.23.0
+  scored_at: '2026-10-11'
+  run_ts: 2026-10-11T110117
+  composite: 32.1
   band: thin
   facets:
-    discoverability: 68.5
-    contract_quality: 28.2
-    governance: 15.2
-    operational_transparency: 21.1
-    developer_ergonomics: 22.6
-    commercial_clarity: 50.0
+    discoverability: 66.1
+    contract_quality: 27.8
     contract_governance: 15.2
-    access_clarity: 50.0
+    operational_transparency: 18.9
+    developer_ergonomics: 22.6
+    access_clarity: 47.9
   agent_readiness:
-    score: 20.5
+    score: 18.6
     band: agent-aware
     dimensions:
       spec_presence: true
@@ -29,7 +27,7 @@ kin_score:
       idempotency: false
       error_semantics: false
       openapi_examples: partial
-      rate_limit_signal: documented
+      rate_limit_signal: derived
       event_surface_described: false
       agent_skills: false
       well_known_catalog: false
@@ -44,7 +42,7 @@ kin_score:
     applies: true
     regime: Education & Research
     regime_id: education
-    score: 46.3
+    score: 24.5
     matched_via: tags
   provenance:
     conformance: first-party
