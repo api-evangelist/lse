@@ -125,6 +125,18 @@ paths:
                 type: string
 components:
   schemas:
+    OAuthError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: 'OAuth 2.0 error code. Observed value: invalid_request.'
+        error_description:
+          type: string
+    JsonWebKeySet:
+      $ref: ../json-schema/lse-lti-jwks-schema.json
     ClientCredentialsRequest:
       type: object
       required:
@@ -142,8 +154,6 @@ components:
         scope:
           type: string
           description: Space-delimited LTI Advantage service scopes granted to the tool registration.
-    JsonWebKeySet:
-      $ref: ../json-schema/lse-lti-jwks-schema.json
     AccessTokenResponse:
       type: object
       properties:
@@ -155,16 +165,6 @@ components:
         expires_in:
           type: integer
         scope:
-          type: string
-    OAuthError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: 'OAuth 2.0 error code. Observed value: invalid_request.'
-        error_description:
           type: string
 x-operator: institution
 x-operator-evidence:
