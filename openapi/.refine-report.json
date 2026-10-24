@@ -1,20 +1,22 @@
 {
   "provider": "lse",
   "sources": [
-    "_original/lse-moodle-lti-platform-openapi.yml"
+    "_original/lse-openapi.yml"
   ],
   "outputs": [
-    "lse-lti-api-openapi.yml"
+    "lse-authority-control-tasks-api-openapi.yml",
+    "lse-lending-requests-api-openapi.yml",
+    "lse-printouts-api-openapi.yml",
+    "lse-requested-resources-api-openapi.yml",
+    "lse-test-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
-    "lse-moodle-lti-platform-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "lse-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+5 apis, 11 total)"
   ],
-  "skipped": [
-    "lse-lti-api-openapi.yml: previously refined output, superseded by openapi/_original/"
-  ]
+  "skipped": []
 }
